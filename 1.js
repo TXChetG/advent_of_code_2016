@@ -34,18 +34,18 @@ var set_cardinal_direction = function ( direction, previous_cardinal ) {
     // console.log( 'S' );
     switch ( direction ) {
       case 'R':
-        return 'E';
-      case 'L':
         return 'W';
+      case 'L':
+        return 'E';
     }
   }
   else if ( previous_cardinal === 'W' ) {
     // console.log( 'W' );
     switch ( direction ) {
       case 'R':
-        return 'S';
-      case 'L':
         return 'N';
+      case 'L':
+        return 'S';
     }
   }
 };
