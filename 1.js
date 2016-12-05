@@ -4,10 +4,14 @@ var test1 = ['R2','L3'];
 var test2 = ['R2','R2','R2'];
 var test3 = ['R5','L5','R5','R3'];
 
-var sum = 0;
+var sum = {
+  ns : 0,
+  ew : 0
+}
 
 //figure out cardinal direction
 var set_cardinal_direction = function ( direction, previous_cardinal ) {
+  console.log ('ran' );
   if ( previous_cardinal === 'N') {
     // console.log( 'N' );
     switch ( direction ) {
@@ -48,10 +52,14 @@ var set_cardinal_direction = function ( direction, previous_cardinal ) {
 
 //add or subtract the number of steps from the sum.
 var add_subtract = function ( sum, cardinal, steps ) {
-  if ( cardinal === 'N' && cardinal === 'E' ){
-    sum += steps;
-  } else {
-    sum -= steps;
+  if ( cardinal === 'N' ){
+    sum.ns += steps;
+  } else if ( cardinal === 'S' ) {
+    sum.ns -= steps;
+  } else if ( cardinal === 'E' ){
+    sum.ew += steps;
+  } else if ( cardinal === 'W' ) {
+    sum.ew -= steps;
   }
   return sum;
 };
@@ -74,6 +82,8 @@ var walk_the_path = function ( arr, sum ){
     sum = add_subtract ( sum, cardinal, steps );
     previous_cardinal = cardinal;
   }
-
-  console.log( sum );
+  final_sum = Math.abs(sum.ns) + Math.abs(sum.ew);
+  console.log ('NS is ' + sum.ns);
+  console.log ('EW is ' + sum.ew);
+  console.log( final_sum );
 };
