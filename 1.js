@@ -7,7 +7,9 @@ var test3 = ['R5','L5','R5','R3'];
 var sum = {
   ns : 0,
   ew : 0
-}
+};
+
+var visited_coords = [];
 
 //figure out cardinal direction
 var set_cardinal_direction = function ( direction, previous_cardinal ) {
@@ -80,10 +82,22 @@ var walk_the_path = function ( arr, sum ){
     //console.log('Previous Direction: ' + previous_cardinal + ', Current Direction: ' + direction[0] + ', Steps: ' + steps + ', Same: ' + cardinal);
 
     sum = add_subtract ( sum, cardinal, steps );
+    add_coord( sum );
     previous_cardinal = cardinal;
   }
   final_sum = Math.abs(sum.ns) + Math.abs(sum.ew);
   console.log ('NS is ' + sum.ns);
   console.log ('EW is ' + sum.ew);
   console.log( final_sum );
+};
+
+//Build an array of visited coordinates
+var add_coord = function( sum ){
+  var coord = [sum.ns, sum.ew];
+  if ( visited_coords.indexOf( coord ) < 0 ){
+    var coord_sum = coord[0] + coord[1];
+    console.log( 'Visited twice: ' + coord + ', Distance: ' + coord_sum );
+  } else {
+    visited_coords.push(coord);
+  }
 };
