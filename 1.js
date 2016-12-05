@@ -6,18 +6,53 @@ var test3 = ['R5','L5','R5','R3'];
 
 var sum = 0;
 
+//figure out cardinal direction
+var set_cardinal_direction = function ( direction, previous_cardinal ) {
+  if ( previous_cardinal === 'N') {
+    // console.log( 'N' );
+    switch ( direction ) {
+      case 'R':
+        return 'E';
+      case 'L':
+        return 'W';
+    }
+  }
+  else if ( previous_cardinal === 'E' ) {
+    // console.log( 'E' );
+    switch ( direction ) {
+      case 'R':
+        return 'S';
+      case 'L':
+        return 'N';
+    }
+  }
+  else if ( previous_cardinal === 'S' ) {
+    // console.log( 'S' );
+    switch ( direction ) {
+      case 'R':
+        return 'E';
+      case 'L':
+        return 'W';
+    }
+  }
+  else if ( previous_cardinal === 'W' ) {
+    // console.log( 'W' );
+    switch ( direction ) {
+      case 'R':
+        return 'S';
+      case 'L':
+        return 'N';
+    }
+  }
+};
+
 //add or subtract the number of steps from the sum.
-var add_subtract = function ( sum, same, steps ) {
-  if ( same ){
-    sum -= steps;
-  } else {
+var add_subtract = function ( sum, cardinal, steps ) {
+  if ( cardinal === 'N' && cardinal === 'E' ){
     sum += steps;
+  } else {
+    sum -= steps;
   }
-
-  if ( sum < 0 ) {
-    sum *= -1;
-  }
-
   return sum;
 };
 
@@ -25,21 +60,19 @@ var add_subtract = function ( sum, same, steps ) {
 
 var walk_the_path = function ( arr, sum ){
   var same = false;
-  var previous = "N";
+  var previous_cardinal = 'N';
+  var cardinal;
   for ( var i = 0; i < arr.length; i++ ){
     var direction = arr[i].match(/[rl]/i);
     var steps = parseInt(arr[i].match(/\d{1,3}/g));
-    
-    if ( previous == direction[0] ){
-      same = true;
-    } else {
-      same = false;
-    }
 
-    console.log('Previous Direction: ' + previous + ', Current Direction: ' + direction[0] + ', Steps: ' + steps + ', Same: ' + same);
+    cardinal = set_cardinal_direction( direction[0], previous_cardinal );
 
-    sum = add_subtract ( sum, same, steps );
-    previous = direction;
+    //console.log( cardinal );
+    //console.log('Previous Direction: ' + previous_cardinal + ', Current Direction: ' + direction[0] + ', Steps: ' + steps + ', Same: ' + cardinal);
+
+    sum = add_subtract ( sum, cardinal, steps );
+    previous_cardinal = cardinal;
   }
 
   console.log( sum );
